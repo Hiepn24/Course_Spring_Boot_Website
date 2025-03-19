@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <link rel="stylesheet" href="output.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <!-- NAV -->
+    <header class="grid grid-cols-1 px-7 py-5 sticky top-0 z-10 shadow bg-white">
+        <div class="flex">
+            <div class="w-[20%]">
+                <p class="text-2xl font-bold text-orange-500 mr-5">
+                    IT Courses
+                </p>
+            </div>
+            <!-- Thanh tìm kiếm -->
+            <div class="mx-auto">
+                <form th:action="@{/findCourse}" method="get">
+                    <i class='bx bx-search text-xl absolute z-10 ml-2 mt-2'></i>
+                    <input id="search" name="key" class="border rounded-lg w-auto lg:w-[420px] py-2 px-7 relative" type="text"
+                        placeholder="Tìm kiếm khóa học,...">
+                    <div id="search-results"></div>
+                </form>
+            </div>
+
+            <div class="w-[20%] py-1 flex">
+                <div class="flex items-center text-lg">
+                    <div th:if="${session.userSession == null}">
+                        <button
+                            class="bg-[#FFA883] px-2 py-1 rounded-xl text-white ring-offset-2 ring-1 ring-white hover:bg-white hover:ring-[#FFA883] hover:text-[#FFA883]">
+                            <a th:href="@{/login}">Đăng nhập</a>
+                        </button>
+                        <button
+                            class="mr-5 px-3 rounded-xl ring-offset-2 ring-1 ring-[#FFA883] text-[#FFA883] hover:bg-[#FFA883] hover:text-white hover:ring-white">
+                            <a href="">Đăng ký</a>
+                        </button>
+                    </div>
+                    <!-- Chỉ hiển thị khi người dùng đã đăng nhập -->
+                    <div class="ml-4" th:if="${session.userSession != null}">
+                        <p th:text="${'Xin chào ' + session.userSession}" th:if="${session.userSession != null}"></p>
+                    </div>
+                    <button class="mr-5">
+                        <a th:href="@{/logout}">
+                            <i class='bx bx-log-out text-2xl rotate-180'></i>
+                        </a>
+                    </button>
+                </div>
+            </div>
+    </header>
+    <!-- Nội dung -->
+    <div class="flex">
+        <!-- SIDE BAR DỌC -->
+        <div class="fixed left-0 h-full w-[100px] shadow">
+            <ul class="flex justify-center pt-5">
+                <li class="flex flex-col columns-1 text-center">
+                    <a th:href="@{/home}">
+                        <i class='bx bxs-home text-2xl'></i>
+                        <p class="text-sm">Trang chủ</p>
+                    </a>
+                </li>
+                <li>
+
+                </li>
+                <li></li>
+            </ul>
+        </div>
+        <!-- Danh sách các khóa học -->
+        <div class="ml-[100px] w-full">
+            <p class="p-7 font-bold text-xl md:text-2xl lg:text-3xl">Tất cả danh mục</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 px-7">
+                <div th:each="temp : ${category}" class="border border-green-400 rounded-xl text-center">
+                    <a th:href="@{/listCourse(categoryId=${temp.id})}">
+                        <p th:text="${temp.categoryName}"></p>
+                    </a>
+                </div>
+            </div>
+
+            <p class="p-7 font-bold text-xl md:text-2xl lg:text-3xl">Tất cả khóa học</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 px-7">
+                <div th:each="temp : ${course}"
+                    class="border rounded-xl shadow-lg transition-all ease-in-out delay-150 hover:-translate-y-2">
+                    <a th:href="@{/detailCourse(courseId=${temp.id})}">
+                        <img class="rounded-t-xl" th:src="${temp.courseImg}" alt="">
+                    </a>
+                    <a th:href="@{/detailCourse(courseId=${temp.id})}">
+                        <p th:text="${temp.courseName}" class="font-semibold my-5 pl-3"></p>
+                    </a>
+                    <div class="flex pl-3 pb-5">
+                        <a th:href="@{/detailCourse(courseId=${temp.id})}" class="px-4 py-1 ms-auto mr-5 bg-green-400 text-sm text-white">
+                            Xem ngay
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FOOTER -->
+    <footer class="bg-[#282A39] text-white p-5 mt-40">
+        <div class="grid grid-cols-2 md:grid-cols-4">
+            <div class="flex justify-center items-center mt-5 lg:mt-0">
+                <p class="font-bold text-4xl">IT Courses</p>
+            </div>
+            <div class="mt-5 lg:mt-0">
+                <p class="text-xl mb-4">Quick Links</p>
+                <ul class="leading-relaxed">
+                    <li>Services</li>
+                    <li>Portfolio</li>
+                    <li>About us</li>
+                    <li>Testimonial</li>
+                </ul>
+            </div>
+            <div class="mt-5 lg:mt-0">
+                <p class="text-xl mb-4">Resources</p>
+                <ul class="leading-relaxed">
+                    <li>Support</li>
+                    <li>Private Policy</li>
+                    <li>Terms & Conditions</li>
+                </ul>
+            </div>
+            <div class="mt-5 lg:mt-0">
+                <p class="text-xl mb-4">Social Media</p>
+                <ul class="flex">
+                    <li class="mr-3">
+                        <i class='bx bxl-facebook-circle'></i>
+                    </li>
+                    <li class="mr-3">
+                        <i class='bx bxl-instagram-alt'></i>
+                    </li>
+                    <li class="mr-3">
+                        <i class='bx bxl-tiktok'></i>
+                    </li>
+                    <li class="mr-3">
+                        <i class='bx bxl-github'></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <hr class="my-5">
+        <p class="text-center">© 2024 All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<!-- Thêm SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

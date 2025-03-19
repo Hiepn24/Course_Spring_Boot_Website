@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="output.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+    <!-- NAV -->
+    <header class="grid grid-cols-1 px-7 py-5 sticky top-0 z-10 bg-[#1b1b2a]">
+        <div class="flex">
+            <div class="w-[20%]">
+                <p class="text-2xl font-bold text-white mr-5">
+                    IT Courses
+                </p>
+            </div>
+            <div class="flex items-center justify-center text-white ms-auto">
+                <div class="mr-2">
+                    <i class='bx bx-user-circle text-3xl'></i>
+                </div>
+                <div class="mr-5 font-bold text-xl">
+                    <p>Xin chào ADMIN</p>
+                </div>
+            </div>
+            <button class="mr-5 text-white">
+                <a href="{{ route('logout') }}">
+                    <i class='bx bx-log-out text-2xl rotate-180'></i>
+                </a>
+            </button>
+        </div>
+    </header>
+    <!-- ND -->
+    <div class="flex">
+        <!-- SIDE BAR DỌC -->
+        <div class="fixed left-0 h-full w-[20%] shadow text-white bg-[#1b1b2a]">
+            <div class="px-5 pt-5">
+                <a class="flex items-center text-lg" th:href="@{/categoryAdmin}">
+                    <i class='bx bxs-category mr-1'></i>
+                    <p>Quản lí danh mục</p>
+                </a>
+            </div>
+            <div class="px-5 pt-5">
+                <a class="flex items-center text-lg" th:href="@{/courseAdmin}">
+                    <i class='bx bxs-book-bookmark mr-1'></i>
+                    <p>Quản lí khóa học</p>
+                </a>
+            </div>
+            <div class="px-5 pt-5">
+                <a class="flex items-center text-lg" th:href="@{/lessonAdmin}">
+                    <i class='bx bxs-book-bookmark mr-1'></i>
+                    <p>Quản lí bài học</p>
+                </a>
+            </div>
+            <div class="px-5 pt-5">
+                <a class="flex items-center text-lg" th:href="@{/rcAdmin}">
+                    <i class='bx bxs-calendar-edit mr-1'></i>
+                    <p>Quản lí đăng ký khóa học</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Nd -->
+        <div class="ml-[20%] w-full p-5">
+            <div class="m-5 pl-5 py-2 border-l-8 bg-white border-[#001c41] shadow-lg rounded-lg">
+                <p class="font-semibold text-lg">Danh sách khóa học / Sửa bài học</p>
+            </div>
+            
+            <div class="m-5 bg-white p-5 rounded-lg shadow">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">Sửa bài học</h2>
+                <form th:action="@{/addLesson}" th:object="${lesson}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{id}">
+                    <div>
+                        <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Tên bài học</label>
+                        <input th:field="*{lessonName}" type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Nhập tên danh mục....">
+                    </div>
+                    <input type="hidden" th:field="*{lessonVideo}">
+                    <div>
+                        <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Video bài học</label>
+                        <input type="file" name="file" id="">
+                    </div>
+                    <div>
+                        <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Danh mục</label>
+                        <select th:field="*{course}">
+                            <th:block th:each="temp : ${course}">
+                                <option th:value="${temp.id}" th:text="${temp.courseName}" th:selected="${temp.id} == *{course.id}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class="flex items-center justify-end">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Sửa
+                        </button>
+                    </div>
+                </form>    
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<!-- Thêm SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

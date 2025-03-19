@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body class="h-[100vh]">
+    <div class="grid grid-cols-1 md:grid-cols-2 h-full justify-center items-center">
+        <div class="order-2 md:order-1">
+            <img class="px-2 lg:p-5" src="login.svg" alt="">
+        </div>
+        <div class=" px-10 pt-5 lg:p-20 order-1 md:order-2">
+            <form th:action="@{/checkLogin}" method="post" class="flex flex-col">
+                <p class="text-4xl font-bold text-center text-orange-500 mb-7">Đăng nhập</p>
+                <label class="text-md font-serif">Email*</label>
+                <input type="text" name="email" class="border rounded-lg pl-2 py-1" placeholder="abc@gmail.com" required>
+                
+                <label class="text-md font-serif mt-5">Mật khẩu*</label>
+                <input type="password" name="password" class="border rounded-lg pl-2 py-1" placeholder="******" required>
+                
+                <button class="bg-orange-400 rounded-lg mt-5 py-3 transition-all active:scale-95">
+                    <p class="font-semibold text-white">Đăng nhập ngay</p>
+                </button>
+                <p class="text-center mt-7">
+                    Vui lòng <a href="" class="underline font-semibold">đăng ký</a> khi chưa có tài khoản !
+                </p>
+            </form>
+            
+        </div>
+    </div>
+</body>
+</html>
